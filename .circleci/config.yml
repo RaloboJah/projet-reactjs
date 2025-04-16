@@ -1,0 +1,21 @@
+version: 2.1
+
+executors:
+  node-executor:
+    docker:
+      - image: cimg/node:18.20.2 
+
+jobs:
+  build-and-test:
+    executor: node-executor
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm test -- --watchAll=false
+      - run: npm run build
+
+workflows:
+  version: 2
+  test_and_build:
+    jobs:
+      - build-and-test
